@@ -12,8 +12,10 @@ ___
 #### Get started
 This application has been crafted with [Vue-CLI](https://cli.vuejs.org/). I suggest you to read the [documentation](https://cli.vuejs.org/guide/) if you have never used it before.
 
-First of all, you have to install npm dependencies:
+First of all, you have to clone the project and install npm dependencies:
 ```bash
+git clone https://github.com/Sanfra1407/vue-cash-flow.git
+cd vue-cash-flow
 npm install
 ```
 
