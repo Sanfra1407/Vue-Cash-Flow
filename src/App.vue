@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1 class="title has-text-centered">Cash flow</h1>
+    <h1 class="title has-text-centered">Vue Cash Flow</h1>
       <CashFlow />
   </div>
 </template>
@@ -15,10 +15,13 @@ export default {
   }
 }
 
-document.title = "Cash Flow";
+document.title = "Vue Cash Flow";
 </script>
 
 <style lang="scss">
+  @import 'bulma';
+  @import '~bulma-tooltip';
+
   #app {
     margin-top: 50px;
   }
