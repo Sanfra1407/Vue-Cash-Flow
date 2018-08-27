@@ -19,7 +19,24 @@
 
 <script>
 export default {
-  props: ['flow', 'removeRow', 'index', 'currency'],
+  props: {
+    currency: {
+      type: String,
+      required: true,
+    },
+    index: {
+      type: Number,
+      required: true,
+    },
+    removeRow: {
+      type: Function,
+      required: true,
+    },
+    flow: {
+      type: Object,
+      required: true
+    }
+  },
   computed:{
     amount() {
       let price = this.flow.amount.toFixed(2);
