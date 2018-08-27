@@ -43,11 +43,32 @@
       </div>
 
       <div class="column is-6 is-offset-3">
-        <h4 class="title is-4">
-          <span>Balance: <span v-html="totalFlow"/> {{ currency }}</span>
-        </h4>
+        <div class="columns">
+          <div class="column is-half">
+            <h4 class="title is-4">
+              <span>Balance: <span v-html="totalFlow"/> {{ currency }}</span>
+            </h4>
+          </div>
+          <div class="column is-3" v-if="this.cashFlow.length > 0">
+            <button class="button is-link is-small tooltip is-tooltip-bottom" 
+                    data-tooltip="Save into local storage." 
+                    @click="saveBalance()">
+              <i class="fa fa-save"></i>
+              <span>Save</span>
+            </button>
+          </div>
+          <div class="column is-3" v-if="this.cashFlow.length > 0">
+            <button class="button is-danger is-small tooltip is-tooltip-bottom" 
+                    data-tooltip="Flush cash flow from everywhere!"
+                    @click="flushBalance()">
+              <i class="fa fa-trash"></i>
+              <span>Flush</span>
+            </button>
+          </div>
+        </div>
+
         <transition name="fade-balance">
-          <hr v-if="this.cashFlow.length > 0">
+          <hr class="divide" v-if="this.cashFlow.length > 0">
         </transition>
       </div>
 
@@ -91,6 +112,12 @@ export default {
       cashFlow: [],
     };
   },
+  mounted() {
+    const savedBalance = localStorage.getItem('vue-cash-flow-balance');
+    if (savedBalance && savedBalance.length > 0) {
+      this.cashFlow = JSON.parse(savedBalance);
+    }
+  },
   methods: {
     editBalance() {
       this.cashFlow.push({
@@ -104,6 +131,13 @@ export default {
     removeRow(index) {
       this.cashFlow.splice(index, 1);
     },
+    saveBalance() {
+      localStorage.setItem('vue-cash-flow-balance', JSON.stringify(this.cashFlow));
+    },
+    flushBalance() {
+      this.cashFlow = [];
+      localStorage.removeItem('vue-cash-flow-balance');
+    }
   },
   computed: {
     regexBalance() {
@@ -123,11 +157,15 @@ export default {
     
       return '<span class="' + className + '">' + total.toFixed(2).replace('.', ',') + '</span>'
     }
-  }
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+  .divide {
+    margin-top: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
   .fade-balance {
     &-enter {
       opacity: 0;
