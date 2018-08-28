@@ -93,15 +93,30 @@
         </table>
       </div>
     </div>
+
+    <Notification
+      v-if="saveNotification"
+      message="Cash flow saved into local storage"
+      :closeNotification="() => this.saveNotification = false"
+    />
+
+    <Notification 
+      v-if="flushNotification"
+      type="danger"
+      message="Local storage has been flushed!"
+      :closeNotification="() => this.flushNotification = false"
+    />
   </div>
 </template>
 
 <script>
 import Flow from "./Flow";
+import Notification from "./Notification";
 
 export default {
   components: {
-    Flow
+    Flow,
+    Notification
   },
   data() {
     return {
@@ -110,6 +125,8 @@ export default {
       currency: '€',
       totalBalance: 0.0,
       cashFlow: [],
+      saveNotification: false,
+      flushNotification: false,
     };
   },
   mounted() {
@@ -133,11 +150,15 @@ export default {
     },
     saveBalance() {
       localStorage.setItem('vue-cash-flow-balance', JSON.stringify(this.cashFlow));
+      this.flushNotification = false;
+      this.saveNotification  = true;
     },
     flushBalance() {
       this.cashFlow = [];
       localStorage.removeItem('vue-cash-flow-balance');
-    }
+      this.saveNotification  = false;
+      this.flushNotification = true;
+    },
   },
   computed: {
     regexBalance() {
@@ -174,8 +195,7 @@ export default {
         transition: opacity 1s;
       }
     }
-  } 
-
+  }
   .button {
     width: 100%;
   }
