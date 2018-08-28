@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <h1 class="title has-text-centered">Vue Cash Flow</h1>
-      <CashFlow />
+    <CashFlow />
   </div>
 </template>
 
