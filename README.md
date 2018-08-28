@@ -1,4 +1,4 @@
-# Cash Flow
+# Vue Cash Flow
 
 ### A simple Vue application to manage your cash flow.
 ___
