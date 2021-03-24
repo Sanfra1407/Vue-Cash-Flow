@@ -6,7 +6,6 @@ ___
 #### Stack
 - **JS Framework**: [Vue.js](https://vuejs.org/)
 - **CSS Framework**: [Bulma CSS](https://bulma.io/)
-- **CSS preprocessor**: SCSS
 
 
 #### Get started
@@ -25,7 +24,7 @@ To serve a development environment, you have to run:
 ```bash
 npm run serve
 ```
-A local server should start at http://localhost:8080/
+A local server will start at http://localhost:8080/
 
 
 #### Build
