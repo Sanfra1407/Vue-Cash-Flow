@@ -1,6 +1,6 @@
 {
-  "name": "cash-flow",
-  "version": "0.1.0",
+  "name": "vue-cash-flow",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -17,7 +17,8 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.1",
     "@vue/cli-plugin-eslint": "^3.0.1",
-    "@vue/cli-service": "^3.0.1",
+    "@vue/cli-service": "^4.5.12",
+    "serialize-javascript": "^5.0.1",
     "vue-template-compiler": "^2.5.17"
   },
   "eslintConfig": {
