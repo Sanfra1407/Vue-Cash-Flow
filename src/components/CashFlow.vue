@@ -48,12 +48,12 @@
 
       <div class="column is-6 is-offset-3">
         <div class="columns">
-          <div class="column is-half">
+          <div class="column is-8">
             <h4 class="title is-4">
               <span>Balance: {{ currency }} <span v-html="totalFlow"/></span>
             </h4>
           </div>
-          <div class="column is-3" v-if="cashFlowIsNotEmpty">
+          <div class="column is-2" v-if="cashFlowIsNotEmpty">
             <button class="button is-link is-small tooltip is-tooltip-bottom" 
                     data-tooltip="Save into local storage." 
                     @click="saveBalance()">
@@ -61,7 +61,7 @@
               <span>Save</span>
             </button>
           </div>
-          <div class="column is-3" v-if="cashFlowIsNotEmpty">
+          <div class="column is-2" v-if="cashFlowIsNotEmpty">
             <button class="button is-danger is-small tooltip is-tooltip-bottom" 
                     data-tooltip="Flush cash flow from everywhere!"
                     @click="flushBalance()">
@@ -91,6 +91,7 @@
               :index="index"
               :flow="flow" 
               :currency="currency"
+              :currencyFormat="getCurrencyFormat"
               :removeRow="removeRow"
             />
           </tbody>
@@ -116,6 +117,7 @@
 <script>
 import Flow from "./Flow";
 import Notification from "./Notification";
+import { formatCurrency } from "../utils";
 
 export default {
   components: {
@@ -161,9 +163,8 @@ export default {
       });
 
       const className = total >= 0 ? "has-text-success" : "has-text-danger";
-      total = new Intl.NumberFormat(this.getCurrencyFormat, { minimumFractionDigits: 2 }).format(total);
     
-      return `<span class="${className}">${total}</span>`
+      return `<span class="${className}">${formatCurrency(this.getCurrencyFormat, total)}</span>`
     },
   },
 
