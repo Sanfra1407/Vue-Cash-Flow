@@ -34,11 +34,13 @@ export default {
       default: 'is-success',
     }
   },
+
   computed: {
     notificationClass() {
       return this.type === 'danger' ? 'is-danger' : 'is-success';
     }
-  }, 
+  },
+
   created() {
     setTimeout(() => {
       this.closeNotification();
@@ -54,21 +56,23 @@ export default {
   position: fixed;
 }
 
-.fade-enter {
-  opacity: 0;
+.fade {
+  &-enter {
+    opacity: 0;
 
-  &-active {
-    transition: all .5s;
-  }
-}
-
-.fade-leave{
-  &-active {
-    transition: all .5s;
+    &-active {
+      transition: all .5s;
+    }
   }
 
-  &-to {
-    right: -500px;
+  &-leave{
+    &-active {
+      transition: all .5s;
+    }
+
+    &-to {
+      right: -500px;
+    }
   }
 }
 </style>

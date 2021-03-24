@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container cash-flow">
     <div class="columns is-multiline">
       <div class="column is-1 is-offset-3">
         <div class="select">
@@ -14,7 +14,11 @@
 
       <div class="column is-2">
         <div class="control has-icons-right">
-          <input class="input has-text-centered" type="text" placeholder="0,00" ref="balance" v-model="balance">
+          <input class="input has-text-centered" 
+                type="text" 
+                placeholder="0,00" 
+                ref="balance" 
+                v-model="balance">
           <span class="icon is-small is-right">
             {{ currency }}
           </span>
@@ -46,10 +50,10 @@
         <div class="columns">
           <div class="column is-half">
             <h4 class="title is-4">
-              <span>Balance: <span v-html="totalFlow"/> {{ currency }}</span>
+              <span>Balance: {{ currency }} <span v-html="totalFlow"/></span>
             </h4>
           </div>
-          <div class="column is-3" v-if="this.cashFlow.length > 0">
+          <div class="column is-3" v-if="cashFlowIsNotEmpty">
             <button class="button is-link is-small tooltip is-tooltip-bottom" 
                     data-tooltip="Save into local storage." 
                     @click="saveBalance()">
@@ -57,7 +61,7 @@
               <span>Save</span>
             </button>
           </div>
-          <div class="column is-3" v-if="this.cashFlow.length > 0">
+          <div class="column is-3" v-if="cashFlowIsNotEmpty">
             <button class="button is-danger is-small tooltip is-tooltip-bottom" 
                     data-tooltip="Flush cash flow from everywhere!"
                     @click="flushBalance()">
@@ -68,11 +72,11 @@
         </div>
 
         <transition name="fade-balance">
-          <hr class="divide" v-if="this.cashFlow.length > 0">
+          <hr class="divide" v-if="cashFlowIsNotEmpty">
         </transition>
       </div>
 
-      <div class="column is-6 is-offset-3" v-if="this.cashFlow.length > 0">
+      <div class="column is-6 is-offset-3" v-if="cashFlowIsNotEmpty">
         <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
           <thead>
             <th class="has-text-centered">Amount</th>
@@ -96,15 +100,15 @@
 
     <Notification
       v-if="saveNotification"
-      message="Cash flow saved into local storage"
-      :closeNotification="() => this.saveNotification = false"
+      message="Cash flow saved into local storage."
+      :closeNotification="() => saveNotification = false"
     />
 
     <Notification 
       v-if="flushNotification"
       type="danger"
       message="Local storage has been flushed!"
-      :closeNotification="() => this.flushNotification = false"
+      :closeNotification="() => flushNotification = false"
     />
   </div>
 </template>
@@ -118,6 +122,7 @@ export default {
     Flow,
     Notification
   },
+
   data() {
     return {
       type: "income",
@@ -129,12 +134,29 @@ export default {
       flushNotification: false,
     };
   },
-  mounted() {
-    const savedBalance = localStorage.getItem('vue-cash-flow-balance');
-    if (savedBalance && savedBalance.length > 0) {
-      this.cashFlow = JSON.parse(savedBalance);
+
+  computed: {
+    regexBalance() {
+      return /^(\d*([.,])?\d{1,2})$/.test(this.balance);
+    },
+
+    cashFlowIsNotEmpty() {
+      return this.cashFlow.length > 0;
+    },
+
+    totalFlow() {
+      let total = 0;
+
+      this.cashFlow.map(({type, amount}) => {
+        total += type === 'cost' ? -amount : amount;
+      });
+
+      const className = total >= 0 ? "has-text-success" : "has-text-danger";
+    
+      return `<span class="${className}">${total.toFixed(2).replace('.', ',')}</span>`
     }
   },
+
   methods: {
     editBalance() {
       this.cashFlow.push({
@@ -142,51 +164,51 @@ export default {
         type: this.type,
         amount: parseFloat(this.balance.toString().replace(',', '.'))
       });
+
       this.balance = "";
       this.$refs.balance.focus();
     },
+
     removeRow(index) {
       this.cashFlow.splice(index, 1);
     },
+
     saveBalance() {
       localStorage.setItem('vue-cash-flow-balance', JSON.stringify(this.cashFlow));
+      
       this.flushNotification = false;
       this.saveNotification  = true;
     },
+
     flushBalance() {
-      this.cashFlow = [];
       localStorage.removeItem('vue-cash-flow-balance');
+
+      this.cashFlow = [];
       this.saveNotification  = false;
       this.flushNotification = true;
     },
   },
-  computed: {
-    regexBalance() {
-      return /^(\d*([.,])?\d{1,2})$/.test(this.balance);
-    },
-    totalFlow() {
-      let total = 0;
-      this.cashFlow.map((item) => {
-        if (item.type === 'cost') {
-          total -= item.amount;
-        }
-        else {
-          total += item.amount;
-        }
-      });
-      const className = total >= 0 ? "has-text-success" : "has-text-danger";
-    
-      return '<span class="' + className + '">' + total.toFixed(2).replace('.', ',') + '</span>'
+
+  mounted() {
+    const savedBalance = localStorage.getItem('vue-cash-flow-balance');
+
+    if (savedBalance) {
+      this.cashFlow = JSON.parse(savedBalance);
     }
   },
 };
 </script>
 
 <style lang="scss" scoped>
+  .cash-flow {
+    margin-top: 50px;
+  }
+
   .divide {
     margin-top: 1.2rem;
     margin-bottom: 0.5rem;
   }
+
   .fade-balance {
     &-enter {
       opacity: 0;
@@ -196,6 +218,7 @@ export default {
       }
     }
   }
+
   .button {
     width: 100%;
   }

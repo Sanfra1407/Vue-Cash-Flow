@@ -5,7 +5,7 @@
         <span>{{ amount }} {{ currency }}</span>
       </td>
       <td class="has-text-centered">
-        <i class="fa fa-arrow-right has-text-danger" v-if="flow.type === 'cost'" />
+        <i class="fa fa-arrow-right has-text-danger" v-if="flowTypeIsACost" />
         <i class="fa fa-arrow-left has-text-success" v-else/>
       </td>
       <td class="has-text-centered">
@@ -24,24 +24,32 @@ export default {
       type: String,
       required: true,
     },
+
     index: {
       type: Number,
       required: true,
     },
+
     removeRow: {
       type: Function,
       required: true,
     },
+
     flow: {
       type: Object,
       required: true
     }
   },
+
   computed:{
     amount() {
-      let price = this.flow.amount.toFixed(2);
+      const price = this.flow.amount.toFixed(2);
 
       return price.replace('.', ',');
+    },
+
+    flowTypeIsACost() {
+      return this.flow.type === 'cost';
     }
   }
 }
