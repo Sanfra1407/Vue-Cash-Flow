@@ -144,6 +144,15 @@ export default {
       return this.cashFlow.length > 0;
     },
 
+    getCurrencyFormat() {
+      return {
+        '€': 'de-DE',
+        '$': 'en-US',
+        '£': 'en-UK',
+        '¥': 'ja-JP',
+      }[this.currency];
+    },
+
     totalFlow() {
       let total = 0;
 
@@ -152,9 +161,10 @@ export default {
       });
 
       const className = total >= 0 ? "has-text-success" : "has-text-danger";
+      total = new Intl.NumberFormat(this.getCurrencyFormat, { minimumFractionDigits: 2 }).format(total);
     
-      return `<span class="${className}">${total.toFixed(2).replace('.', ',')}</span>`
-    }
+      return `<span class="${className}">${total}</span>`
+    },
   },
 
   methods: {
