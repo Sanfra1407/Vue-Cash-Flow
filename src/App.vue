@@ -9,7 +9,7 @@
 import CashFlow from './components/CashFlow.vue'
 
 export default {
-  name: 'App',
+  name: 'VueCashFlow',
   components: {
     CashFlow
   }
