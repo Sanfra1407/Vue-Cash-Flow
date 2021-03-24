@@ -44,7 +44,7 @@ export default {
   created() {
     setTimeout(() => {
       this.closeNotification();
-    }, 5000);
+    }, 2500);
   }
 }
 </script>
