@@ -38,6 +38,11 @@ export default {
     notificationClass() {
       return this.type === 'danger' ? 'is-danger' : 'is-success';
     }
+  }, 
+  created() {
+    setTimeout(() => {
+      this.closeNotification();
+    }, 5000);
   }
 }
 </script>
