@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import CashFlow from './components/CashFlow.vue'
+import CashFlow from './components/CashFlow'
 
 export default {
   name: 'VueCashFlow',
