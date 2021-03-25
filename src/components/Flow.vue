@@ -5,8 +5,8 @@
         <span>{{ currency }} {{ formattedAmount }}</span>
       </td>
       <td class="has-text-centered">
-        <i class="fa fa-arrow-right has-text-danger" v-if="flowTypeIsACost" />
-        <i class="fa fa-arrow-left has-text-success" v-else />
+        <i v-if="flowTypeIsACost" class="fa fa-arrow-right has-text-danger" title="Cost"/>
+        <i v-else class="fa fa-arrow-left has-text-success" title="Income"/>
       </td>
       <td class="has-text-centered">
         <button class="button is-danger is-small" @click="removeRow(index)">

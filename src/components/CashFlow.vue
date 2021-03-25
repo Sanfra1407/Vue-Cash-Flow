@@ -14,10 +14,11 @@
 
       <div class="column is-2">
         <div class="control has-icons-right">
-          <input class="input has-text-centered" 
+          <input :class="['input has-text-centered', 
+                  isFilledBalance && !isValidBalance ? 'has-text-danger is-danger' : null
+                ]" 
                 type="text" 
                 placeholder="0,00" 
-                ref="balance" 
                 v-model="balance">
           <span class="icon is-small is-right">
             {{ currency }}
@@ -40,7 +41,7 @@
         <div class="control has-text-left">
           <button 
             class="button is-primary" 
-            :disabled="regexBalance === false" 
+            :disabled="!isValidBalance" 
             @click="editBalance">
             Add</button>
         </div>
@@ -138,8 +139,12 @@ export default {
   },
 
   computed: {
-    regexBalance() {
+    isValidBalance() {
       return /^(\d*([.,])?\d{1,2})$/.test(this.balance);
+    },
+
+    isFilledBalance() {
+      return !!this.balance;
     },
 
     cashFlowIsNotEmpty() {
@@ -177,7 +182,6 @@ export default {
       });
 
       this.balance = "";
-      this.$refs.balance.focus();
     },
 
     removeRow(index) {
@@ -185,7 +189,10 @@ export default {
     },
 
     saveBalance() {
-      localStorage.setItem('vue-cash-flow-balance', JSON.stringify(this.cashFlow));
+      localStorage.setItem('vue-cash-flow-balance', JSON.stringify({
+        'currency': this.currency,
+        'cashFlow': this.cashFlow,
+      }));
       
       this.flushNotification = false;
       this.saveNotification  = true;
@@ -202,9 +209,12 @@ export default {
 
   mounted() {
     const savedBalance = localStorage.getItem('vue-cash-flow-balance');
-
+    
     if (savedBalance) {
-      this.cashFlow = JSON.parse(savedBalance);
+      const { currency, cashFlow } = JSON.parse(savedBalance);
+      
+      this.cashFlow = cashFlow;
+      this.currency = currency;
     }
   },
 };
