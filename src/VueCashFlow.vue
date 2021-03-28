@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="vfc">
     <h1 class="title has-text-centered">Vue Cash Flow</h1>
     <CashFlow></CashFlow>
   </div>
