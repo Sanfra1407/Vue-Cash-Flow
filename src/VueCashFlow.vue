@@ -20,7 +20,7 @@ export default {
   @import 'bulma';
   @import '~bulma-tooltip';
 
-  #app {
+  #vfc {
     margin-top: 50px;
   }
 
