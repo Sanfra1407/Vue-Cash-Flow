@@ -72,32 +72,28 @@
           </div>
         </div>
 
-        <transition name="fade-balance">
+        <transition name="fade-balance" :duration="150">
           <hr class="divide" v-if="cashFlowIsNotEmpty">
         </transition>
       </div>
 
-      <div class="column is-6 is-offset-3" v-if="cashFlowIsNotEmpty">
-        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-          <thead>
-            <th class="has-text-centered">Amount</th>
-            <th class="has-text-centered">Type</th>
-            <th class="has-text-centered">Actions</th>
-          </thead>
-          <tbody>
-            <tr 
-              is="Flow" 
-              v-for="(flow, index) in cashFlow" 
-              :key="flow.id"
-              :index="index"
-              :flow="flow" 
+      <transition name="fade-balance" :duration="150">
+        <div class="column is-6 is-offset-3" v-if="cashFlowIsNotEmpty">
+          <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+            <thead>
+              <th class="has-text-centered">Amount</th>
+              <th class="has-text-centered">Type</th>
+              <th class="has-text-centered">Actions</th>
+            </thead>
+            <TableBody 
+              :cash-flow="cashFlow"
               :currency="currency"
               :currencyFormat="getCurrencyFormat"
               :removeRow="removeRow"
-            />
-          </tbody>
-        </table>
-      </div>
+            ></TableBody>
+          </table>
+        </div>
+      </transition>
     </div>
 
     <Notification
@@ -116,13 +112,14 @@
 </template>
 
 <script>
-import Flow from "./Flow";
+import TableBody from "./TableBody";
 import Notification from "./Notification";
 import { formatCurrency } from "../utils";
 
 export default {
+  name: "CashFlow",
   components: {
-    Flow,
+    TableBody,
     Notification
   },
 
