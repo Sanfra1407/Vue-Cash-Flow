@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import CashFlow from './components/CashFlow';
+import CashFlow from './components/CashFlow.vue';
 
 export default {
   name: 'VueCashFlow',
@@ -17,8 +17,9 @@ export default {
 </script>
 
 <style lang="scss">
-  @import 'bulma';
-  @import '~bulma-tooltip';
+  @import "bulma/css/bulma.min.css";
+  @import '@creativebulma/bulma-tooltip/dist/bulma-tooltip.min.css';
+  @import 'font-awesome/css/font-awesome.min.css';
 
   #vfc {
     margin-top: 50px;

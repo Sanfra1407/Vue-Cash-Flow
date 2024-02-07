@@ -1,9 +1,4 @@
-import Vue from 'vue';
-import VueCashFlow from './VueCashFlow';
+import { createApp } from 'vue';
+import VueCashFlow from './VueCashFlow.vue';
 
-Vue.config.productionTip = false;
-
-new Vue({
-  el: '#vcf',
-  render: h => h(VueCashFlow)
-});
+createApp(VueCashFlow).mount('#vcf');

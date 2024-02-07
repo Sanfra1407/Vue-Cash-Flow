@@ -1,39 +1,55 @@
 # Vue Cash Flow
 
 ### A simple Vue application to manage your cash flow.
-___
 
-#### Stack
+---
+
+### Stack
+
 - **JS Framework**: [Vue.js](https://vuejs.org/)
 - **CSS Framework**: [Bulma CSS](https://bulma.io/)
+- **Development environment**: [Vite.js](https://vitejs.dev/)
 
-
-#### Get started
-This application has been crafted with [Vue-CLI](https://cli.vuejs.org/). I suggest you to read the [documentation](https://cli.vuejs.org/guide/) if you have never used it before.
+### Get started
 
 First of all, you have to clone the project and install npm dependencies:
+
 ```bash
 git clone https://github.com/Sanfra1407/vue-cash-flow.git
 cd vue-cash-flow
 npm install
 ```
 
-
 #### Development server
-To serve a development environment, you have to run:
-```bash
-npm run serve
-```
-A local server will start at http://localhost:8080/
 
+To serve a development environment, you have to run:
+
+```bash
+npm run dev
+```
+
+A local server will start at http://localhost:3000/
 
 #### Build
-If you want to compile the production version, you just need to run:
+
+To compile the production version, you just need to run:
+
 ```bash
 npm run build
 ```
+
 A `dist/` directory will be created, in the application root, with all optimized assets.
 
+#### Preview
 
-#### Deploy 
-To deploy your application, you can follow the [official Vue-CLI guide](https://cli.vuejs.org/guide/deployment.html). 
+It's possibile to see a preview of the built app by running:
+
+```bash
+npm run preview
+```
+
+A local server will start at http://localhost:3080/ with the production version.
+
+#### Deploy
+
+To deploy your application, you can follow the [official Vite.js guide](https://vitejs.dev/guide/static-deploy.html#deploying-a-static-site).
