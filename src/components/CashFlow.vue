@@ -3,7 +3,7 @@
     <div class="columns is-multiline">
       <div class="column is-1 is-offset-3">
         <div class="select">
-          <select v-model="currency">
+          <select v-model="currency" name="currency">
             <option>€</option>
             <option>$</option>
             <option>£</option>
@@ -16,7 +16,8 @@
         <div class="control has-icons-right">
           <input :class="['input has-text-centered', 
                   isFilledBalance && !isValidBalance ? 'has-text-danger is-danger' : null
-                ]" 
+                ]"
+                name="amount"
                 type="text" 
                 placeholder="0,00" 
                 v-model="balance">
@@ -29,7 +30,7 @@
       <div class="column is-2">
         <div class="control">
           <div class="select">
-            <select v-model="type">
+            <select v-model="type" name="type">
               <option value="cost">Cost</option>
               <option value="income">Income</option>
             </select>
@@ -112,8 +113,8 @@
 </template>
 
 <script>
-import TableBody from "./TableBody";
-import Notification from "./Notification";
+import TableBody from "./TableBody.vue";
+import Notification from "./Notification.vue";
 import { formatCurrency } from "../utils";
 
 export default {
